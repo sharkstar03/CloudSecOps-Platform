@@ -25,16 +25,62 @@ La plataforma se compone de los siguientes módulos:
 cloud-sec-ops/
 ├── backend/                     # API y servicios backend
 │   ├── api/                     # API Gateway
+│   │   ├── __init__.py
+│   │   ├── main.py              # FastAPI application
+│   │   ├── routes/              # API routes
+│   │   ├── models/              # Data models
+│   │   └── utils/               # Utility functions
 │   ├── scanners/                # Escáneres de vulnerabilidades
+│   │   ├── __init__.py
+│   │   ├── aws_scanner.py
+│   │   ├── azure_scanner.py
+│   │   └── vulnerability_db.py
 │   └── integrations/            # Integraciones con servicios cloud
+│       ├── __init__.py
+│       ├── aws/
+│       └── azure/
 ├── frontend/                    # Dashboard UI en React
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── store/
+│   │   ├── utils/
+│   │   ├── App.js
+│   │   └── index.js
+│   ├── package.json
+│   └── README.md
 ├── infrastructure/              # Infraestructura como código
 │   ├── terraform/               # Configuraciones de Terraform
 │   │   ├── aws/                 # Recursos AWS
+│   │   │   ├── main.tf
+│   │   │   ├── variables.tf
+│   │   │   └── outputs.tf
 │   │   └── azure/               # Recursos Azure
+│   │       ├── main.tf
+│   │       ├── variables.tf
+│   │       └── outputs.tf
 │   └── kubernetes/              # Manifiestos de Kubernetes
+│       ├── deployment.yaml
+│       ├── service.yaml
+│       └── ingress.yaml
 ├── monitoring/                  # Componentes de monitoreo
-└── scripts/                     # Scripts de automatización
+│   ├── prometheus/
+│   │   └── prometheus.yml
+│   ├── grafana/
+│   │   └── dashboards/
+│   └── alerts/
+│       └── rules.yml
+├── scripts/                     # Scripts de automatización
+│   ├── deploy-aws.sh
+│   ├── deploy-azure.sh
+│   └── security-scan.sh
+├── .env.example                 # Ejemplo de variables de entorno
+├── requirements.txt             # Dependencias de Python
+├── LICENSE                      # Licencia MIT
+├── README.md                    # Documentación principal
+└── CONTRIBUTING.md              # Guía de contribuciones
 ```
 
 ## 🚀 Tecnologías utilizadas
