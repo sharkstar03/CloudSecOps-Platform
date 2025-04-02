@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudsecops-backend
+  labels:
+    app: cloudsecops
+    component: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cloudsecops
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: cloudsecops
+        component: backend
+    spec:
+      containers:
+      - name: backend
+        image: cloudsecops/backend:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: cloudsecops-secrets
+              key: database-url
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: cloudsecops-secrets
+              key: aws-access-key
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cloudsecops-secrets
+              key: aws-secret-key
+        - name: AZURE_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: cloudsecops-secrets
+              key: azure-client-id
+        - name: AZURE_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: cloudsecops-secrets
+              key: azure-client-secret
+        - name: AZURE_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: cloudsecops-secrets
+              key: azure-tenant-id
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudsecops-frontend
+  labels:
+    app: cloudsecops
+    component: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudsecops
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: cloudsecops
+        component: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: cloudsecops/frontend:latest
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+        env:
+        - name: REACT_APP_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: cloudsecops-config
+              key: api-url
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20

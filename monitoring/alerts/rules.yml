@@ -1,0 +1,112 @@
+groups:
+  - name: cloudsecops_alerts
+    rules:
+    # Critical Severity Vulnerabilities Alert
+    - alert: CriticalVulnerabilityDetected
+      expr: cloudsecops_vulnerabilities_total{severity="critical"} > 0
+      for: 5m
+      labels:
+        severity: critical
+        category: security
+      annotations:
+        summary: "Critical vulnerability detected"
+        description: "{{ $value }} critical vulnerabilities detected in the environment"
+        dashboard_url: "https://grafana.example.com/d/security/vulnerabilities"
+
+    # High AWS IAM Risk
+    - alert: HighAWSIAMRisk
+      expr: cloudsecops_aws_iam_risk_score > 80
+      for: 10m
+      labels:
+        severity: high
+        category: security
+        cloud: aws
+      annotations:
+        summary: "High AWS IAM risk detected"
+        description: "AWS IAM risk score is {{ $value }}, indicating potential security issues"
+        runbook_url: "https://wiki.example.com/cloudsecops/runbooks/aws-iam-risks"
+
+    # Azure Exposed Storage
+    - alert: AzureStoragePubliclyAccessible
+      expr: cloudsecops_azure_public_storage_accounts > 0
+      for: 5m
+      labels:
+        severity: high
+        category: security
+        cloud: azure
+      annotations:
+        summary: "Azure storage accounts publicly accessible"
+        description: "{{ $value }} Azure storage accounts have public access enabled"
+        remediation: "Disable public access for the affected storage accounts"
+
+    # Compliance Failure
+    - alert: ComplianceCheckFailure
+      expr: cloudsecops_compliance_checks_failed / cloudsecops_compliance_checks_total > 0.2
+      for: 1h
+      labels:
+        severity: warning
+        category: compliance
+      annotations:
+        summary: "Compliance check failure rate is high"
+        description: "More than 20% of compliance checks are failing"
+        dashboard_url: "https://grafana.example.com/d/compliance/overview"
+
+    # Service Health
+    - alert: APIHighLatency
+      expr: rate(cloudsecops_api_request_duration_seconds_sum[5m]) / rate(cloudsecops_api_request_duration_seconds_count[5m]) > 0.5
+      for: 5m
+      labels:
+        severity: warning
+        category: performance
+      annotations:
+        summary: "API latency is high"
+        description: "API request duration is above 500ms on average over the last 5 minutes"
+
+    # Scanning Issues
+    - alert: VulnerabilityScanFailure
+      expr: cloudsecops_scan_status{status="failed", type="vulnerability"} > 0
+      for: 15m
+      labels:
+        severity: warning
+        category: monitoring
+      annotations:
+        summary: "Vulnerability scanning failures detected"
+        description: "{{ $value }} vulnerability scans have failed in the last 15 minutes"
+        troubleshooting: "Check scanner logs for errors and connection issues"
+
+    # Resource Quota
+    - alert: AWSResourceQuotaNearLimit
+      expr: cloudsecops_aws_resource_usage / cloudsecops_aws_resource_quota > 0.8
+      for: 30m
+      labels:
+        severity: info
+        category: capacity
+        cloud: aws
+      annotations:
+        summary: "AWS resource quota usage is high"
+        description: "AWS resource usage is above 80% of quota limits"
+        dashboard_url: "https://grafana.example.com/d/aws/resources"
+
+    # Authentication Failures
+    - alert: ExcessiveAuthFailures
+      expr: rate(cloudsecops_auth_failures_total[15m]) > 10
+      for: 15m
+      labels:
+        severity: high
+        category: security
+      annotations:
+        summary: "Excessive authentication failures detected"
+        description: "More than 10 authentication failures per minute, possible brute force attack"
+        runbook_url: "https://wiki.example.com/cloudsecops/runbooks/auth-attacks"
+
+    # Database Health
+    - alert: DatabaseConnectionIssues
+      expr: cloudsecops_database_connection_errors_total > 0
+      for: 5m
+      labels:
+        severity: critical
+        category: database
+      annotations:
+        summary: "Database connection issues detected"
+        description: "Application is experiencing database connection failures"
+        runbook_url: "https://wiki.example.com/cloudsecops/runbooks/database-troubleshooting"

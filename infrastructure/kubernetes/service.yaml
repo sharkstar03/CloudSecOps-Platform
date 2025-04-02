@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudsecops-backend
+  labels:
+    app: cloudsecops
+    component: backend
+spec:
+  selector:
+    app: cloudsecops
+    component: backend
+  ports:
+  - port: 8000
+    targetPort: 8000
+    name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudsecops-frontend
+  labels:
+    app: cloudsecops
+    component: frontend
+spec:
+  selector:
+    app: cloudsecops
+    component: frontend
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  type: ClusterIP

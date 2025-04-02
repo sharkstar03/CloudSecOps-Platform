@@ -5,85 +5,90 @@
 ![Azure](https://img.shields.io/badge/Azure-Ready-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 📋 Descripción
+## 📋 Description
 
-Plataforma de seguridad cloud-native diseñada para monitorear, detectar y responder a amenazas de seguridad en tiempo real en entornos multi-cloud. Proporciona una solución completa para implementar prácticas de DevSecOps en pipelines de CI/CD y administrar la seguridad de infraestructuras cloud.
+CloudSecOps Platform is a cloud-native security platform designed to monitor, detect, and respond to security threats in real-time across multi-cloud environments. It provides a comprehensive solution for implementing DevSecOps practices in CI/CD pipelines and managing security for cloud infrastructures.
 
-## 🛡️ Características principales
+## 🛡️ Key Features
 
-- **Monitoreo continuo** de recursos AWS y Azure con alertas en tiempo real
-- **Análisis automatizado** de configuraciones inseguras
-- **Evaluación de cumplimiento** con estándares como CIS, NIST, PCI DSS
-- **Panel de control** para visualización de vulnerabilidades
-- **Respuesta automática** a incidentes de seguridad
+- **Continuous monitoring** of AWS and Azure resources with real-time alerts
+- **Automated analysis** of insecure configurations
+- **Compliance assessment** with standards like CIS, NIST, PCI DSS
+- **Dashboard** for vulnerability visualization
+- **Automated response** to security incidents
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
-La plataforma se compone de los siguientes módulos:
+The platform consists of the following modules:
 
 ```
-cloud-sec-ops/
-├── backend/                     # API y servicios backend
+CloudSecOps-Platform/
+├── backend/                     # API and backend services
 │   ├── api/                     # API Gateway
 │   │   ├── __init__.py
 │   │   ├── main.py              # FastAPI application
 │   │   ├── routes/              # API routes
 │   │   ├── models/              # Data models
 │   │   └── utils/               # Utility functions
-│   ├── scanners/                # Escáneres de vulnerabilidades
+│   ├── scanners/                # Vulnerability scanners
 │   │   ├── __init__.py
 │   │   ├── aws_scanner.py
 │   │   ├── azure_scanner.py
 │   │   └── vulnerability_db.py
-│   └── integrations/            # Integraciones con servicios cloud
+│   └── integrations/            # Cloud service integrations
 │       ├── __init__.py
 │       ├── aws/
 │       └── azure/
-├── frontend/                    # Dashboard UI en React
+├── frontend/                    # Dashboard UI in React
 │   ├── public/
 │   ├── src/
 │   │   ├── components/
+│   │   ├── context/
+│   │   ├── layout/
 │   │   ├── pages/
 │   │   ├── services/
 │   │   ├── store/
 │   │   ├── utils/
 │   │   ├── App.js
-│   │   └── index.js
+│   │   └── theme.js
 │   ├── package.json
-│   └── README.md
-├── infrastructure/              # Infraestructura como código
-│   ├── terraform/               # Configuraciones de Terraform
-│   │   ├── aws/                 # Recursos AWS
+│   ├── Dockerfile
+│   └── nginx.conf
+├── infrastructure/              # Infrastructure as code
+│   ├── terraform/               # Terraform configurations
+│   │   ├── aws/                 # AWS resources
 │   │   │   ├── main.tf
 │   │   │   ├── variables.tf
 │   │   │   └── outputs.tf
-│   │   └── azure/               # Recursos Azure
+│   │   └── azure/               # Azure resources
 │   │       ├── main.tf
 │   │       ├── variables.tf
 │   │       └── outputs.tf
-│   └── kubernetes/              # Manifiestos de Kubernetes
+│   └── kubernetes/              # Kubernetes manifests
 │       ├── deployment.yaml
 │       ├── service.yaml
 │       └── ingress.yaml
-├── monitoring/                  # Componentes de monitoreo
+├── monitoring/                  # Monitoring components
 │   ├── prometheus/
 │   │   └── prometheus.yml
 │   ├── grafana/
 │   │   └── dashboards/
 │   └── alerts/
 │       └── rules.yml
-├── scripts/                     # Scripts de automatización
+├── scripts/                     # Automation scripts
 │   ├── deploy-aws.sh
 │   ├── deploy-azure.sh
 │   └── security-scan.sh
-├── .env.example                 # Ejemplo de variables de entorno
-├── requirements.txt             # Dependencias de Python
-├── LICENSE                      # Licencia MIT
-├── README.md                    # Documentación principal
-└── CONTRIBUTING.md              # Guía de contribuciones
+├── .env.example                 # Environment variables example
+├── requirements.txt             # Python dependencies
+├── Dockerfile                   # Root Dockerfile
+├── docker-compose.yml           # Docker Compose configuration
+├── LICENSE                      # MIT License
+├── README.md                    # Main documentation
+└── CONTRIBUTING.md              # Contribution guidelines
 ```
 
-## 🚀 Tecnologías utilizadas
+## 🚀 Technologies Used
 
 ### Backend
 - Python 3.11
@@ -96,79 +101,79 @@ cloud-sec-ops/
 - React 18
 - Redux Toolkit
 - Material UI
-- D3.js para visualizaciones
+- D3.js for visualizations
 
-### Infraestructura
+### Infrastructure
 - Terraform
 - Docker
 - Kubernetes
 - AWS CloudFormation
 - Azure Resource Manager
 
-### Seguridad
-- OWASP ZAP para escaneo de vulnerabilidades
-- HashiCorp Vault para gestión de secretos
+### Security
+- OWASP ZAP for vulnerability scanning
+- HashiCorp Vault for secrets management
 - AWS Security Hub & Azure Security Center
 
-## 📸 Capturas de pantalla
+## 📸 Screenshots
 
 ![Dashboard](https://via.placeholder.com/800x400?text=Security+Dashboard)
 ![Threat Map](https://via.placeholder.com/800x400?text=Threat+Detection+Map)
 
-## 🔧 Instalación
+## 🔧 Installation
 
-### Requisitos previos
+### Prerequisites
 - Python 3.11+
 - Node.js 18+
-- AWS CLI configurado
-- Azure CLI configurado
+- AWS CLI configured
+- Azure CLI configured
 - Terraform 1.5+
-- Docker y Docker Compose
+- Docker and Docker Compose
 
-### Configuración del entorno
+### Environment Setup
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/sharkstar03/cloudsecops-platform.git
 cd cloudsecops-platform
 
-# Configurar entorno virtual de Python
+# Set up Python virtual environment
 python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-# Instalar dependencias del frontend
+# Install frontend dependencies
 cd frontend
 npm install
 cd ..
 
-# Configurar variables de entorno
+# Configure environment variables
 cp .env.example .env
-# Editar .env con tus configuraciones
+# Edit .env with your configurations
 
-# Desplegar infraestructura
+# Deploy infrastructure
 cd infrastructure/terraform
 terraform init
 terraform apply
 ```
 
-## 📊 Reportes y Dashboards
+## 📊 Reports and Dashboards
 
-La plataforma genera informes detallados sobre:
-- Vulnerabilidades detectadas y su severidad
-- Exposición a riesgos y recomendaciones
-- Cumplimiento con estándares de seguridad
-- Actividad sospechosa y posibles intrusiones
+The platform generates detailed reports on:
+- Detected vulnerabilities and their severity
+- Risk exposure and recommendations
+- Compliance with security standards
+- Suspicious activity and possible intrusions
 
-## 🌐 Despliegue
+## 🌐 Deployment
 
-### Despliegue en AWS
+### AWS Deployment
 ```bash
 cd scripts
 ./deploy-aws.sh
 ```
 
-### Despliegue en Azure
+### Azure Deployment
 ```bash
 cd scripts
 ./deploy-azure.sh
@@ -177,36 +182,36 @@ cd scripts
 ## 🧪 Testing
 
 ```bash
-# Ejecutar tests unitarios
+# Run unit tests
 pytest
 
-# Ejecutar tests de integración
+# Run integration tests
 pytest -m integration
 
-# Ejecutar análisis de seguridad
+# Run security analysis
 ./scripts/security-scan.sh
 ```
 
 ## 📝 Roadmap
 
-- [ ] Integración con GCP
-- [ ] Implementación de ML para detección de anomalías
-- [ ] Soporte para contenedores en Kubernetes
-- [ ] Integraciones con SIEM externos
-- [ ] API pública para integraciones de terceros
+- [ ] GCP Integration
+- [ ] ML implementation for anomaly detection
+- [ ] Kubernetes container support
+- [ ] External SIEM integrations
+- [ ] Public API for third-party integrations
 
-## 🤝 Contribuciones
+## 🤝 Contributions
 
-Las contribuciones son bienvenidas. Por favor, lee [CONTRIBUTING.md](CONTRIBUTING.md) para más detalles.
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## 📜 Licencia
+## 📜 License
 
-Este proyecto está licenciado bajo MIT License - ver el archivo [LICENSE](LICENSE) para más detalles.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📬 Contacto
+## 📬 Contact
 
 Edgar Alberto Ng Angulo - [its_shark03@protonmail.com](mailto:its_shark03@protonmail.com)
 
 ---
 
-⭐ Star este repositorio si te resulta útil!
+⭐ Star this repository if you find it useful!
